@@ -31,7 +31,8 @@ class User extends Authenticatable
         'BI',
         'NUIT',
         'contacto_1',
-        'contacto_2'
+        'contacto_2',
+        'papel_id'
 
 
     ];

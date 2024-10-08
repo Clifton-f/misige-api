@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use App\Models\Papel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Models\User;
 class UserResource extends JsonResource
 {
     /**
@@ -28,14 +28,17 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'dadosPessoais'=>[
             'id'=>$this->id,
             'nome'=>$this->nome,
             'email'=>$this->email,
             'BI'=>$this->BI,
             'NUIT'=>$this->NUIT,
             'contacto'=>[$this->contacto_1,$this->contacto_1],
+
+            ],
             'papel' => new PapelResource(Papel::where('id',$this->papel_id)->first()),
-            'permissoes'=> UserResource::getPermissoes()//Papel::where('id', $this->papel_id)->with('permissao')->first()UserResource::getPermissoes()
+            'permissoes'=> UserResource::getPermissoes(User::where('id',$this->id)->first())//Papel::where('id', $this->papel_id)->with('permissao')->first()UserResource::getPermissoes()
 
         ];
         
