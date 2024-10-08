@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePermissaoRequest;
 use App\Http\Requests\UpdatePermissaoRequest;
+use App\Http\Resources\V1\PermissaoResouce;
 use App\Models\Permissao;
 
 class PermissaoController extends Controller
@@ -32,6 +33,7 @@ class PermissaoController extends Controller
     public function show(Permissao $permissao)
     {
         //
+        return new PermissaoResouce($permissao);
     }
 
     /**

@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Resources\V1\UserResource;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use App\Models\Papel;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -20,7 +22,7 @@ class AuthController extends Controller
         'contacto_2'=>'max:11'
         ]);
         $user=User::create($fields);
-        $token = $user->createToken($request->name);
+        $token = $user->createToken($request->name,'jjj',);
         return [
             'user'=>$user,
             'token'=>$token->plainTextToken
@@ -34,6 +36,7 @@ class AuthController extends Controller
         ]);
         $user = User::where('email',$request->email)->first();
 
+        
         if(!$user || !Hash::check($request->password,$user->password)){
             return [
                 'message'=>'As credenciais que providenciou estão erradas'
@@ -41,9 +44,14 @@ class AuthController extends Controller
             
         }
 
-        $token = $user->createToken($user->nome);
+        
+         
+         $userResource = new UserResource($user);
+
+        $token = $user->createToken($user->nome,$userResource->getPermissoes());
         return [
-            'user'=>$user,
+            'user'=>$userResource,
+            
             'token'=>$token->plainTextToken
 
     ];

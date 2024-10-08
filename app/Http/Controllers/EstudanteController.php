@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEstudanteRequest;
 use App\Http\Requests\UpdateEstudanteRequest;
 use App\Models\Estudante;
-
+use App\Http\Resources\V1\EstudanteResource;
 class EstudanteController extends Controller
 {
     /**
@@ -22,6 +22,7 @@ class EstudanteController extends Controller
     public function store(StoreEstudanteRequest $request)
     {
         //
+        return new EstudanteResource($request);
     }
 
     /**
